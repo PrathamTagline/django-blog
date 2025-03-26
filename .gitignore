@@ -1,0 +1,14 @@
+# Virtual environment
+env/
+
+# Django specific files
+db.sqlite3
+
+# Environment variables
+.env
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
