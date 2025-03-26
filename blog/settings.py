@@ -17,9 +17,13 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+AUTH_USER_MODEL = 'users.User'
 # Initialize environment variables
 env = environ.Env(DEBUG=(bool, False))  # Define default values
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Ensure .env is read
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
