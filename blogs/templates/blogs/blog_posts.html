@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/blog_posts.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div style="height: 20px;"></div>
+<div class="filter-container">
+    <button class="filter-btn active" onclick="filterSelection({{i.name}})">All</button>
+    {% for i in all_categories %}
+    <button class="filter-btn" onclick="">{{i.name}}</button>
+    {% endfor %}
+    
+</div>
+<div style="height: 20px;"></div>
+<div class="grid-container">
+        {% for blog in all_blogs %}
+    <div class="card">
+        <img src="{% static "media/image.png" %}" alt="Card Image" />
+        <div class="card-content">
+        <div class="card-title">{{ blog.title }}</div>
+        <div class="card-text">{{ blog.content }}</div>
+        <a href="#" class="card-btn">Read More</a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    <script>
+        function filterSelection(category) {
+            let cards = document.querySelectorAll(".card");
+            let buttons = document.querySelectorAll(".filter-btn");
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove("active"));
+            event.target.classList.add("active");
+
+            // Show/hide cards based on category
+            if (category === "all") {
+                cards.forEach(card => card.style.display = "block");
+            } else {
+                cards.forEach(card => {
+                    card.style.display = card.classList.contains(category) ? "block" : "none";
+                });
+            }
+        }
+    </script>
+{% endblock content %}
