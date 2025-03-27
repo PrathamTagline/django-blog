@@ -7,43 +7,49 @@
 
 {% block content %}
 <div style="height: 20px;"></div>
+
+<!-- Filter Buttons -->
 <div class="filter-container">
-    <button class="filter-btn active" onclick="filterSelection({{i.name}})">All</button>
-    {% for i in all_categories %}
-    <button class="filter-btn" onclick="">{{i.name}}</button>
+    <button class="filter-btn active" onclick="filterSelection('all')">All</button>
+    {% for category in all_categories %}
+        <button class="filter-btn" onclick="filterSelection('{{ category.name|slugify }}')">{{ category.name }}</button>
     {% endfor %}
-    
 </div>
+
 <div style="height: 20px;"></div>
+
+<!-- Blog Posts Grid -->
 <div class="grid-container">
-        {% for blog in all_blogs %}
-    <div class="card">
-        <img src="{% static "media/image.png" %}" alt="Card Image" />
+    {% for blog in all_blogs %}
+    <div class="card {{ blog.category.name|slugify }}">
+        <img src="{% static 'media/image.png' %}" alt="Card Image" />
         <div class="card-content">
-        <div class="card-title">{{ blog.title }}</div>
-        <div class="card-text">{{ blog.content }}</div>
-        <a href="#" class="card-btn">Read More</a>
+            <div class="card-title">{{ blog.title }}</div>
+            <div class="card-text">{{ blog.content|truncatewords:20 }}</div>
+            <a href="{% url "blog_detail" slug=blog.slug %}" class="card-btn">Read More</a>
         </div>
     </div>
     {% endfor %}
-    </div>
-    <script>
-        function filterSelection(category) {
-            let cards = document.querySelectorAll(".card");
-            let buttons = document.querySelectorAll(".filter-btn");
+</div>
 
-            // Update active button
-            buttons.forEach(btn => btn.classList.remove("active"));
-            event.target.classList.add("active");
+<!-- JavaScript Filtering Logic -->
+<script>
+    function filterSelection(category) {
+        let cards = document.querySelectorAll(".card");
+        let buttons = document.querySelectorAll(".filter-btn");
 
-            // Show/hide cards based on category
+        // Update active button styling
+        buttons.forEach(btn => btn.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Show/hide blog cards
+        cards.forEach(card => {
             if (category === "all") {
-                cards.forEach(card => card.style.display = "block");
+                card.style.display = "block";
             } else {
-                cards.forEach(card => {
-                    card.style.display = card.classList.contains(category) ? "block" : "none";
-                });
+                card.style.display = card.classList.contains(category) ? "block" : "none";
             }
-        }
-    </script>
+        });
+    }
+</script>
 {% endblock content %}
