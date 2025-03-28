@@ -1,0 +1,7 @@
+<!-- Filter Buttons -->
+<div class="filter-container">
+    <button class="filter-btn active" onclick="filterSelection('all')">All</button>
+    {% for category in all_categories %}
+        <button class="filter-btn" onclick="filterSelection('{{ category.name|slugify }}')">{{ category.name }}</button>
+    {% endfor %}
+</div>

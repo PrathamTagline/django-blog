@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Blog, Category
+from .models import Blog, Category,Comment
 
 def blogs(request):
     all_blogs = Blog.objects.select_related('category').all()
@@ -13,7 +13,8 @@ def blogs(request):
 
 def blog_detail(request, slug):
     blog = get_object_or_404(Blog,slug=slug)
-    return render(request, 'blogs/blog_post_detials.html', {'blog': blog})
+    comments = Comment.objects.filter(blog=blog)
+    return render(request, 'blogs/blog_post_detials.html', {'blog': blog, 'comments': comments})
 
 
 

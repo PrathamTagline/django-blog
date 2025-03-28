@@ -1,0 +1,9 @@
+{% load static %}
+<div class="card {{ blog.category.name|slugify }}">
+    <img src="{% static 'media/image.png' %}" alt="Card Image" />
+    <div class="card-content">
+        <div class="card-title">{{ blog.title }}</div>
+        <div class="card-text">{{ blog.content|truncatewords:20 }}</div>
+        <a href="{% url "blog_detail" slug=blog.slug %}" class="card-btn">Read More</a>
+    </div>
+</div>

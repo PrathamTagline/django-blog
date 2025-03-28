@@ -12,3 +12,5 @@ db.sqlite3
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+temp.txt
