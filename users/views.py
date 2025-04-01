@@ -54,3 +54,24 @@ def user_logout(request):
     request.session.flush()  # Clear the session
 
     return redirect('login') # Redirect to the login page
+
+
+
+from django.contrib.auth.decorators import login_required
+
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from blogs.models import Blog
+
+
+@login_required
+def profile(request):
+    user = User.objects.get(id=request.session.get("user_id"))
+    user_blogs = Blog.objects.filter(author=user)  
+
+    context = {
+        "user": user,
+        "user_blogs": user_blogs,
+    }
+    return render(request, "users/profile.html", context)
