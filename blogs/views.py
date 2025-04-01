@@ -53,7 +53,7 @@ def edit_blog(request, blog_id):
         if form.is_valid():
             form.save()
             messages.success(request, "Blog updated successfully!")
-            return redirect('profile', slug=blog.slug)  # Redirect to the blog detail page
+            return redirect('profile')  # Redirect to the blog detail page
     else:
         form = BlogForm(instance=blog)
 
