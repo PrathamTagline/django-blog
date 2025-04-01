@@ -141,7 +141,8 @@
                 <a href="{% url 'logout' %}" class="btn">Logout</a>
             </div>
         </div>
-
+        
+        {% if request.user.role == 'author' %}
         <!-- Right Side (Blog List) -->
         <div class="content">
             <!-- Top Bar with Create Blog Button -->
@@ -169,6 +170,9 @@
                 {% endif %}
             </div>
         </div>
+        {% endif %}
+       
+        
     </div>
 
 </body>
