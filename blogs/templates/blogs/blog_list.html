@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Blogs</title>
+</head>
+<body>
+    <h2>Welcome, {{ request.session.user_username }}</h2>
+    <p>Email: {{ request.session.user_email }}</p>
+    <p>Role: {{ request.session.user_role }}</p>
+
+    <h2>All Blogs</h2>
+    <ul>
+        {% for blog in blogs %}
+            <li>
+                <h3>{{ blog.title }}</h3>
+                <p>{{ blog.content }}</p>
+                <p><strong>Author:</strong> {{ blog.author.username }}</p>
+                
+                {% if request.session.user_role == "author" and blog.author.username == request.session.user_username %}
+                    <a href="{% url 'edit_blog' blog.id %}">Edit</a> |
+                    <a href="{% url 'delete_blog' blog.id %}">Delete</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if request.session.user_role == "author" %}
+        <a href="{% url 'add_blog' %}">Add Blog</a>
+    {% endif %}
+
+    <br><br>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>

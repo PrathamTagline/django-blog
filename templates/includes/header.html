@@ -7,14 +7,22 @@
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             <li><a href="#">Dashboard</a></li>
+            {% if user.is_authenticated and request.session.user_role == "author" %}
+                <li><a href="">Create Blog</a></li>
+            {% endif %}
+
         </ul>
-        <button class="login-btn" onclick="window.location.href='{% url 'signup' %}'">Login</button>
+        {% if user.is_authenticated %}
+            <div class="profile-icon" onclick="window.location.href=''">
+                <img src="" alt="Profile" class="profile-img">
+            </div>
+            <button class="logout-btn" onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+        {% else %}
+            <button class="login-btn" onclick="window.location.href='{% url 'login' %}'">Login</button>
+        {% endif %}
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     </div>
 </nav>
-
-
-
 
 {% comment %} <!DOCTYPE html>
 <html lang="en">

@@ -3,6 +3,7 @@ from .models import User
 # Register your models here.
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'email', 'is_author', 'created_at')
-    search_fields = ('username', 'email')
-    list_filter = ('is_author', 'created_at')
+    list_display = ['username', 'email', 'role']
+    list_filter = ['role']
+    search_fields = ['username', 'email']
+    ordering = ['username']
