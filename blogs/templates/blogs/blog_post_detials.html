@@ -48,7 +48,7 @@
         {% endfor %}
     
         <!-- Add Comment Form -->
-        {% if user.is_authenticated %}
+        {% comment %} {% if user.is_authenticated %}
         <form id="comment-form" method="POST" action="{% url 'add_comment' blog.id %}">
             {% csrf_token %}
             <textarea name="content" id="new-comment" placeholder="Write your comment here..." required></textarea>
@@ -56,7 +56,7 @@
         </form>
         {% else %}
         <p class="login-message">You must <a href="">log in</a> to post a comment.</p>
-        {% endif %}
+        {% endif %} {% endcomment %}
     </section>
 
 {% endblock %}

@@ -14,7 +14,7 @@
         </ul>
         {% if user.is_authenticated %}
             <div class="profile-icon" onclick="window.location.href=''">
-                <img src="" alt="Profile" class="profile-img">
+               <a href="{% url 'profile' %}"><img src="" alt="Profile" class="profile-img"></a> 
             </div>
             <button class="logout-btn" onclick="window.location.href='{% url 'logout' %}'">Logout</button>
         {% else %}

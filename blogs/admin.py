@@ -17,8 +17,7 @@ class BlogAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'blog', 'created_at')
-    # search_fields = ('user__username', 'blog__title', 'content')
-    # list_filter = ('created_at',)
+    
 
 @admin.register(Like)
 class LikeAdmin(admin.ModelAdmin):

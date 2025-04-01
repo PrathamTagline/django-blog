@@ -4,13 +4,11 @@
     <title>Add Blog</title>
 </head>
 <body>
-    <h2>Add a New Blog</h2>
-    <form method="POST">
+    <h1>Add Blog</h1>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Post</button>
+        <button type="submit">Submit</button>
     </form>
-    <br>
-    <a href="{% url 'blog_list' %}">Back to Blog List</a>
 </body>
 </html>

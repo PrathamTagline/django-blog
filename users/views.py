@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from .models import User
+
+from blogs.models import Blog
+from users.models import User
+
 from .forms import LoginForm, RegisterForm
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 # Register new users
 def register(request):
@@ -55,20 +61,12 @@ def user_logout(request):
 
     return redirect('login') # Redirect to the login page
 
-
-
-from django.contrib.auth.decorators import login_required
-
-
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from blogs.models import Blog
-
-
-@login_required
+# User profile
+@login_required # Ensure that the user is logged in
 def profile(request):
-    user = User.objects.get(id=request.session.get("user_id"))
-    user_blogs = Blog.objects.filter(author=user)  
+
+    user = User.objects.get(id=request.session.get("user_id")) # Get the user by the session user_id
+    user_blogs = Blog.objects.filter(author=user)  # Get the blogs by the user
 
     context = {
         "user": user,
