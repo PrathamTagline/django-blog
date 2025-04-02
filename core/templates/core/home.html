@@ -4,46 +4,33 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/hero_section.css' %}">
     <link rel="stylesheet" href="{% static 'css/card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog_posts.css' %}">
 {% endblock css %}
 
 {% block content %}
     {% include "core/includes/hero_section.html" %}
     <div style="height: 40px;"></div>
+    
     <div class="container">
-        <div class="card custom-card" style="width: 18rem;">
-            <img src="{% static 'media/image.png' %}" class="card-img-top" alt="Card image">
-            <div class="card-body">
-              <h5 class="card-title">Card Title</h5>
-              <p class="card-text">This is an example of a card with a title, some text, and a button for actions.</p>
-              <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-        </div>
-        <div class="card custom-card" style="width: 18rem;">
-            <img src="{% static 'media/image.png' %}" class="card-img-top" alt="Card image">
-            <div class="card-body">
-              <h5 class="card-title">Card Title</h5>
-              <p class="card-text">This is an example of a card with a title, some text, and a button for actions.</p>
-              <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-        </div>
-        <div class="card custom-card" style="width: 18rem;">
-            <img src="{% static 'media/image.png' %}" class="card-img-top" alt="Card image">
-            <div class="card-body">
-              <h5 class="card-title">Card Title</h5>
-              <p class="card-text">This is an example of a card with a title, some text, and a button for actions.</p>
-              <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-        </div>
-        <div class="card custom-card" style="width: 18rem;">
-            <img src="{% static 'media/image.png' %}" class="card-img-top" alt="Card image">
-            <div class="card-body">
-              <h5 class="card-title">Card Title</h5>
-              <p class="card-text">This is an example of a card with a title, some text, and a button for actions.</p>
-              <a href="#" class="btn btn-primary">Learn More</a>
-            </div>
-        </div>
+      <h1>Recent blogs </h1>
+      <div style="height: 100px;"></div>
     </div>
+    <div class="container">
+  
+
+      {% for post in recent_blogs %}
+      <div class="card custom-card" style="width: 18rem;">
+        <img src="{% static 'media/image.png' %}" class="card-img-top" alt="Card image">
+        <div class="card-body">
+          <h5 class="card-title">{{post.title}}</h5>
+          <p class="card-text">{{ post.content|truncatechars:30 }}</p>
+          <a href="{% url "blog_detail" slug=post.slug %}" class="card-btn">Read More</a>
+        </div>
+      </div>
+      {% endfor %}
+        
+     
     <div style="height: 40px;"></div>
 
-    
+    <div style="height: 40px;"></div><div style="height: 40px;"></div>
 {% endblock content %}

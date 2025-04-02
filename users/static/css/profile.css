@@ -1,0 +1,111 @@
+
+.sidebar {
+    width: 20%;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    text-align: center;
+}
+
+.user-info h2 {
+    color: #333;
+}
+
+.user-info p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Right Side (Blog List) */
+.content {
+    width: 80%;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Create Blog Button */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+/* Blog List (Vertical Layout) */
+.blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.blog-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.blog-card h4 {
+    margin: 5px 0;
+    color: #333;
+}
+
+.blog-card p {
+    color: #666;
+    font-size: 14px;
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.btn-edit {
+    background: #28a745;
+}
+
+.btn-delete {
+    background: red;
+}
+
+.btn-edit:hover {
+    background: #218838;
+}
+
+.btn-delete:hover {
+    background: darkred;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+    }
+
+    .content {
+        width: 100%;
+    }
+}

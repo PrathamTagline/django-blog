@@ -4,15 +4,11 @@ from .models import Blog
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['title', 'slug', 'content', 'category', 'tags', 'image']
+        fields = ['title', 'content', 'category', 'tags', 'image']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter blog title'
-            }),
-            'slug': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter unique slug (optional)',
             }),
             'content': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -29,8 +25,5 @@ class BlogForm(forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
             }),
-        }
-        help_texts = {
-            'slug': 'Leave blank to auto-generate a slug.',
         }
 

@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Edit Blog</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Blog
+{% endblock title %}
+
+{% block content %}
     <h1>Edit Blog</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -11,5 +12,5 @@
         <button type="submit">Save Changes</button>
     </form>
     <a href="{% url 'blog_detail' slug=blog.slug %}">Cancel</a>
-</body>
-</html> 
+{% endblock content %}
+
