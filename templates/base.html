@@ -4,9 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% comment %}  Add a title block to the base.html template {% endcomment %}
     <title>{% block title %}{% endblock title %}</title>
+
+    {% comment %} style sheets {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+
     {% block css %}{% endblock css %}
 </head>
 <body>

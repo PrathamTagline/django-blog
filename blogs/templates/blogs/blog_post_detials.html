@@ -1,62 +1,79 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}
-{{blog.title}}
+    {{blog.title}}
 {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/blog_post_detials.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/comment.css' %}" />
-    
+    <link rel="stylesheet" href="{% static 'css/blog_post_detials.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/comment.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/like.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-    
-    <section id="summary">
+<section id="summary">
         <h2>{{ blog.title }}</h2>
         <article>
-            <img src="{% static 'media/image.png' %}" alt="{{blog.title}}">
-            <address>by {{blog.author}}</address>
-            <div>
-                last update <time datetime="">{{blog.created_at|date:"d M Y"}}</time>
-            </div>
+                <img src="{% static 'media/image.png' %}" alt="{{blog.title}}">
+                <address>by {{blog.author}}</address>
+                <div>
+                        last update <time datetime="">{{blog.created_at|date:"d M Y"}}</time>
+                </div>
         </article>
 
         <main>
-            {{blog.content}}
+                {{ blog.content }}
         </main>
+        <section id="likes">
+            <button id="like-btn" data-blog-id="{{ blog.id }}" class="like-btn">
+                {% if user in blog.likes.all %}
+                    Unlike
+                {% else %}
+                    Like
+                {% endif %}
+            </button>
+            <span id="like-count">{{ blog.likes.count }}</span> Likes
+        </section>
+</section>
 
-    </section>
 
-    <section id="comments">
+
+
+
+<section id="comments">
         <h3>Comments ({{ comments.count }})</h3>
-    
+
         {% for comment in comments %}
         <div class="comment">
-            <div class="comment-header">
-                <img src="{% static 'media/image.png' %}" alt="User Avatar" class="comment-avatar">
-                <div class="comment-info">
-                    <span class="comment-author">{{ comment.user }}</span>
-                    <time class="comment-date">{{ comment.created_at|date:"d M Y, H:i A" }}</time>
+                <div class="comment-header">
+                        <img src="{% static 'media/image.png' %}" alt="User Avatar" class="comment-avatar">
+                        <div class="comment-info">
+                                <span class="comment-author">{{ comment.user }}</span>
+                                <time class="comment-date">{{ comment.created_at|date:"d M Y, H:i A" }}</time>
+                        </div>
                 </div>
-            </div>
-            <p class="comment-content">{{ comment.content }}</p>
+                <p class="comment-content">{{ comment.content }}</p>
         </div>
         {% empty %}
         <p class="no-comments">No comments yet. Be the first to comment!</p>
         {% endfor %}
-    
+
         <!-- Add Comment Form -->
         {% if user.is_authenticated %}
         <form id="comment-form" method="POST" action="{% url 'add_comment' blog.id %}">
-            {% csrf_token %}
-            <textarea name="content" id="new-comment" placeholder="Write your comment here..." required></textarea>
-            <button type="submit" id="btn-post">Post Comment</button>
+                {% csrf_token %}
+                <textarea name="content" id="new-comment" placeholder="Write your comment here..." required></textarea>
+                <button type="submit" id="btn-post">Post Comment</button>
         </form>
         {% else %}
-        <p class="login-message">You must <a href="">log in</a> to post a comment.</p>
+        <p class="login-message">You must <a href="{% url 'login' %}">log in</a> to post a comment.</p>
         {% endif %}
-    </section>
+</section>
+
+{% block js %}
+    <script src="{% static 'js/like_section.js' %}"></script>
+{% endblock js %}
 
 {% endblock %}

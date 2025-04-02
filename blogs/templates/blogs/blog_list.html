@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Blogs</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}
+    Blogs
+{% endblock title %}
+{% block content %}
     <h2>Welcome, {{ request.session.user_username }}</h2>
     <p>Email: {{ request.session.user_email }}</p>
     <p>Role: {{ request.session.user_role }}</p>
@@ -12,6 +11,7 @@
     <ul>
         {% for blog in blogs %}
             <li>
+                
                 <h3>{{ blog.title }}</h3>
                 <p>{{ blog.content }}</p>
                 <p><strong>Author:</strong> {{ blog.author.username }}</p>
@@ -30,5 +30,4 @@
 
     <br><br>
     <a href="{% url 'logout' %}">Logout</a>
-</body>
-</html>
+{% endblock content %}

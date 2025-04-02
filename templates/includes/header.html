@@ -2,224 +2,27 @@
     <div class="container">
         <div class="logo">MyBlog</div>
         <ul class="nav-links">
-            <li><a href="">Home</a></li>
+            <li><a href="{% url "home" %}">Home</a></li>
             <li><a href="{% url "blogs" %}">Blogs</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="#">Dashboard</a></li>
             {% if user.is_authenticated and request.session.user_role == "author" %}
-                <li><a href="">Create Blog</a></li>
+                <li><a href="{% url "create_blog" %}">Create Blog</a></li>
             {% endif %}
-
         </ul>
+
         {% if user.is_authenticated %}
             <div class="profile-icon" onclick="window.location.href=''">
-                <img src="" alt="Profile" class="profile-img">
+               <a href="{% url 'profile' %}"><img src="" alt="Profile" class="profile-img"></a> 
             </div>
             <button class="logout-btn" onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+
         {% else %}
             <button class="login-btn" onclick="window.location.href='{% url 'login' %}'">Login</button>
+
         {% endif %}
+        
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     </div>
 </nav>
 
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filter Section with Category</title>
-    <style>
-        /* Base Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-
-        /* Filter Section */
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .filter-btn {
-            padding: 10px 15px;
-            border: none;
-            background: #007bff;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 14px;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: #0056b3;
-        }
-
-        /* Grid Container */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        /* Card Styles */
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 15px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .card-text {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .card-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 12px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background 0.3s ease;
-        }
-
-        .card-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Filter Section -->
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterSelection('all')">All</button>
-        <button class="filter-btn" onclick="filterSelection('technology')">Technology</button>
-        <button class="filter-btn" onclick="filterSelection('travel')">Travel</button>
-        <button class="filter-btn" onclick="filterSelection('food')">Food</button>
-        <button class="filter-btn" onclick="filterSelection('lifestyle')">Lifestyle</button>
-    </div>
-
-    <!-- Grid Container -->
-    <div class="grid-container" id="grid">
-        <div class="card technology">
-            <img src="https://via.placeholder.com/300" alt="Technology">
-            <div class="card-content">
-                <div class="card-title">Tech Innovations</div>
-                <div class="card-text">Latest trends in technology.</div>
-                <a href="#" class="card-btn">Read More</a>
-            </div>
-        </div>
-
-        <div class="card travel">
-            <img src="https://via.placeholder.com/300" alt="Travel">
-            <div class="card-content">
-                <div class="card-title">Exploring Nature</div>
-                <div class="card-text">Travel to amazing places.</div>
-                <a href="#" class="card-btn">Read More</a>
-            </div>
-        </div>
-
-        <div class="card food">
-            <img src="https://via.placeholder.com/300" alt="Food">
-            <div class="card-content">
-                <div class="card-title">Delicious Recipes</div>
-                <div class="card-text">Try new food recipes today!</div>
-                <a href="#" class="card-btn">Read More</a>
-            </div>
-        </div>
-
-        <div class="card lifestyle">
-            <img src="https://via.placeholder.com/300" alt="Lifestyle">
-            <div class="card-content">
-                <div class="card-title">Healthy Lifestyle</div>
-                <div class="card-text">Stay fit and energetic.</div>
-                <a href="#" class="card-btn">Read More</a>
-            </div>
-        </div>
-
-        <div class="card technology">
-            <img src="https://via.placeholder.com/300" alt="Technology">
-            <div class="card-content">
-                <div class="card-title">AI Revolution</div>
-                <div class="card-text">How AI is changing the world.</div>
-                <a href="#" class="card-btn">Read More</a>
-            </div>
-        </div>
-
-        <div class="card travel">
-            <img src="https://via.placeholder.com/300" alt="Travel">
-            <div class="card-content">
-                <div class="card-title">Adventure Awaits</div>
-                <div class="card-text">Find the best travel spots.</div>
-                <a href="#" class="card-btn">Read More</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function filterSelection(category) {
-            let cards = document.querySelectorAll(".card");
-            let buttons = document.querySelectorAll(".filter-btn");
-
-            // Update active button
-            buttons.forEach(btn => btn.classList.remove("active"));
-            event.target.classList.add("active");
-
-            // Show/hide cards based on category
-            if (category === "all") {
-                cards.forEach(card => card.style.display = "block");
-            } else {
-                cards.forEach(card => {
-                    card.style.display = card.classList.contains(category) ? "block" : "none";
-                });
-            }
-        }
-    </script>
-
-</body>
-</html> {% endcomment %}

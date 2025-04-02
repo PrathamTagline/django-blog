@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,12 @@
             font-size: 14px;
             color: #666;
         }
-
+        .blog-image{
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            
+        }
         /* Right Side (Blog List) */
         .content {
             width: 80%;
@@ -130,7 +136,7 @@
     </style>
 </head>
 <body>
-
+    
     <div class="container">
         <!-- Left Sidebar (User Info) -->
         <div class="sidebar">
@@ -141,12 +147,14 @@
                 <a href="{% url 'logout' %}" class="btn">Logout</a>
             </div>
         </div>
-
+        
+        {% if request.user.role == 'author' %}
         <!-- Right Side (Blog List) -->
         <div class="content">
             <!-- Top Bar with Create Blog Button -->
             <div class="top-bar">
                 <h2>Your Blogs</h2>
+                <a href="{% url "home" %}" class="btn">home page</a>
                 <a href="{% url "create_blog" %}" class="btn">Create Blog</a>
             </div>
 
@@ -154,13 +162,21 @@
             <div class="blog-list">
                 {% if user_blogs %}
                     {% for blog in user_blogs %}
+                       
                         <div class="blog-card">
-                            <h4>{{ blog.title }}</h4>
+                            <div class="blog-image">
+                                <img src="{% static "media/image.png" %}" alt="fdsfsfa">
+                            </div>
+
+                            <div class="blog-contents">
+                                <h4>{{ blog.title }}</h4>
                             <p>{{ blog.content|truncatewords:20 }}</p>
                             <div class="card-buttons">
                                 <a href="" class="btn">Read</a>
-                                <a href="" class="btn btn-edit">Edit</a>
-                                <a href="" class="btn btn-delete">Delete</a>
+                                <a href="{% url 'edit_blog' blog.id %}" class="btn btn-edit">Edit</a>
+                                <a href="{% url "delete_blog" blog.id %}" class="btn btn-delete">Delete</a>
+                            </div>
+                            
                             </div>
                         </div>
                     {% endfor %}
@@ -169,6 +185,9 @@
                 {% endif %}
             </div>
         </div>
+        {% endif %}
+       
+        
     </div>
 
 </body>

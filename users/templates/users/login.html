@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Login</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}
+    Login
+{% endblock title %}
+
+{% block content %}
     <h2>Login</h2>
     <form method="POST">
         {% csrf_token %}
@@ -11,5 +12,4 @@
         <button type="submit">Login</button>
     </form>
     <a href="{% url 'register' %}">Register</a>
-</body>
-</html>
+{% endblock content %}
