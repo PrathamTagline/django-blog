@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('allposts', views.all_blogs, name='blogs'),
@@ -10,3 +12,6 @@ urlpatterns = [
     path('post/<int:blog_id>/add_comment/', views.add_comment, name='add_comment'),
      path('post/<int:blog_id>/like/', views.like_blog, name='like_blog'),  # Like blog URL
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

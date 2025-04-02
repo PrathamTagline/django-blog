@@ -4,8 +4,12 @@ from .models import Blog
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['title', 'content', 'category', 'tags', 'image']
+        fields = ['image','title', 'content', 'category', 'tags', 'image']
         widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter blog title'
+            }),
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter blog title'

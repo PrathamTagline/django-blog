@@ -2,14 +2,16 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from blogs.forms import BlogForm
 from .models import Blog, Category,Comment,Like
+from users.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # display all blogs and categories
 def all_blogs(request):
-    all_blogs = Blog.objects.select_related('category').all() # Get all blogs with the category
+    
+    all_blogs = Blog.objects.select_related('category', 'author').all() # Get all blogs with the category and author
     all_categories = Category.objects.values('name') # Get all categories
-
+    
     context = {
         'all_blogs': all_blogs,
         'all_categories': all_categories
