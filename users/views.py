@@ -5,21 +5,20 @@ from users.models import User
 
 from .forms import LoginForm, RegisterForm
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-
-# Register new users
 def register(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid(): # Check if the form is valid
+        form = RegisterForm(request.POST, request.FILES)  # Handle file uploads
+        if form.is_valid():
             form.save()
-            return redirect('login') #redirect to login page
-        
-    else: # If the form is not valid, render the register page
+            messages.success(request, "Registration successful! You can now log in.")
+            return redirect('login')  # Redirect to login page
+    else:
         form = RegisterForm()
-
+    
     return render(request, 'users/register.html', {'form': form})
 
 # Login existing users
