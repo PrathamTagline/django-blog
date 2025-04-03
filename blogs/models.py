@@ -2,8 +2,11 @@ from django.db import models
 from users.models import User
 
 def user_blog_image_path(instance, filename):
+    """
+    Define the path for blog images.
+    Each author's blogs will be stored in their own folder.
+    """
     return f'users/{instance.author.id}/blogs/{filename}'
-
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -17,7 +20,7 @@ class Blog(models.Model):
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="blogs")
     tags = models.CharField(max_length=255, blank=True, help_text="Comma-separated tags (e.g. #Django, #AI)")
-    image = models.ImageField(upload_to=user_blog_image_path, blank=True, null=True) 
+    image = models.ImageField(upload_to=user_blog_image_path, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     views = models.PositiveIntegerField(default=0)
