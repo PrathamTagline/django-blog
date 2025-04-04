@@ -89,18 +89,6 @@ def add_comment(request, blog_id):
             Comment.objects.create(blog=blog, user=request.user, content=content) # Create a new comment
     return redirect('blog_detail', slug=blog.slug)
 
+    
 
-
-# like blog post (only for logged in users)
-@login_required
-def like_blog(request, blog_id):
-    blog = get_object_or_404(Blog, id=blog_id) # Get the blog by ID
-    like, created = Like.objects.get_or_create(user=request.user, blog=blog) # Get or create a like object
-    if not created:
-        # If the like already exists, remove it (unlike)
-        like.delete()
-        liked = False
-    else:
-        # If the like is newly created, mark it as liked
-        liked = True
-    return JsonResponse({'liked': liked, 'total_likes': blog.likes.count()})
+                       

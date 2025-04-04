@@ -26,16 +26,7 @@
         <main>
                 {{ blog.content }}
         </main>
-        <section id="likes">
-            <button id="like-btn" data-blog-id="{{ blog.id }}" class="like-btn">
-                {% if user in blog.likes.all %}
-                    Unlike
-                {% else %}
-                    Like
-                {% endif %}
-            </button>
-            <span id="like-count">{{ blog.likes.count }}</span> Likes
-        </section>
+        
 </section>
 
 
