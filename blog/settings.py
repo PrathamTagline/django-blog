@@ -22,7 +22,8 @@ AUTH_USER_MODEL = 'users.User'
 env = environ.Env(DEBUG=(bool, False))  # Define default values
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Ensure .env is read
 
-# media settings
+
+# Media settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

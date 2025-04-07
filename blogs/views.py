@@ -79,16 +79,20 @@ def delete_blog(request, blog_id):
 
 
 
-# add comment to the blog post (only for logged in users)
 @login_required
 def add_comment(request, blog_id):
-    blog = get_object_or_404(Blog, id=blog_id) # Get the blog by ID (if it exists)
+    blog = get_object_or_404(Blog, id=blog_id)  # Get the blog by ID (if it exists)
     if request.method == 'POST':
-        content = request.POST.get('content') 
+        content = request.POST.get('content').strip()  # Get the comment content from the form
         if content:
-            Comment.objects.create(blog=blog, user=request.user, content=content) # Create a new comment
-    return redirect('blog_detail', slug=blog.slug)
-
+            if content == "":
+                messages.error(request, "Comment cannot be empty.")
+                return redirect('blog_detail', slug=blog.slug)
     
-
-                       
+            # Create a new comment and associate it with the blog and user
+            Comment.objects.create(
+                blog=blog,
+                user=request.user,
+                content=content
+            )
+    return redirect('blog_detail', slug=blog.slug)  # Redirect to the blog detail page with the slug

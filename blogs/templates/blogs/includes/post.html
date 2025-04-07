@@ -1,11 +1,12 @@
-{% load static %}
+
 <div class="card {{ blog.category.name|slugify }}">
-    <img src="{% static "media/image.png" %}" alt="{{ blog.title }}" class="card-img-top" />
+    <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="card-img-top" />
     <div class="card-content">
         <div class="card-title">{{ blog.title }}</div>
         <div class="card-text">{{ blog.content|truncatechars:30 }}</div>
+        <div class="card-text">{{ blog.created_at}}</div>
         <div style="height : 20px"></div>
         <div class="card-text">author : {{blog.author }}</div>
         <a href="{% url "blog_detail" slug=blog.slug %}" class="card-btn">Read More</a>
     </div>
-</div>
+</div>  
