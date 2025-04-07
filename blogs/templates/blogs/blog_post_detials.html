@@ -16,7 +16,7 @@
 <section id="summary">
         <h2>{{ blog.title }}</h2>
         <article>
-                <img src="{% static 'media/image.png' %}" alt="{{blog.title}}">
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="card-img-top" />
                 <address>by {{blog.author}}</address>
                 <div>
                         last update <time datetime="">{{blog.created_at|date:"d M Y"}}</time>
@@ -26,21 +26,8 @@
         <main>
                 {{ blog.content }}
         </main>
-        <section id="likes">
-            <button id="like-btn" data-blog-id="{{ blog.id }}" class="like-btn">
-                {% if user in blog.likes.all %}
-                    Unlike
-                {% else %}
-                    Like
-                {% endif %}
-            </button>
-            <span id="like-count">{{ blog.likes.count }}</span> Likes
-        </section>
+        
 </section>
-
-
-
-
 
 <section id="comments">
         <h3>Comments ({{ comments.count }})</h3>
@@ -48,7 +35,11 @@
         {% for comment in comments %}
         <div class="comment">
                 <div class="comment-header">
-                        <img src="{% static 'media/image.png' %}" alt="User Avatar" class="comment-avatar">
+                        {% if comment.user.profile_image %}
+                        <img src="{{ comment.user.profile_image.url }}" alt="User Avatar" class="comment-avatar">
+                    {% else %}
+                        <img src="{% static 'images/default-avatar.png' %}" alt="Default Avatar" class="comment-avatar">
+                    {% endif %}
                         <div class="comment-info">
                                 <span class="comment-author">{{ comment.user }}</span>
                                 <time class="comment-date">{{ comment.created_at|date:"d M Y, H:i A" }}</time>
