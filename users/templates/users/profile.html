@@ -1,194 +1,21 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>User Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
 
-        .container {
-            display: flex;
-            height: 100vh;
-            width: 100%;
-        }
+{% block title %}
+    User Profile
+{% endblock title %}
 
-        /* Left Sidebar (User Info) */
-        .sidebar {
-            width: 20%;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
-        }
+{% block css %}
+    <link href="{% static "css/profile.css" %}" rel="stylesheet">
+{% endblock css %}
 
-        .user-info {
-            text-align: center;
-        }
-
-        .user-info h2 {
-            color: #333;
-        }
-
-        .user-info p {
-            font-size: 14px;
-            color: #666;
-        }
-        .blog-image{
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-            
-        }
-        /* Right Side (Blog List) */
-        .content {
-            width: 80%;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        /* Create Blog Button */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 8px 12px;
-            background: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .btn:hover {
-            background: #0056b3;
-        }
-
-        /* Blog List (Vertical Layout) */
-        .blog-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .blog-card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 100%;
-        }
-
-        .blog-card h4 {
-            margin: 5px 0;
-            color: #333;
-        }
-
-        .blog-card p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .card-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
-        .btn-edit {
-            background: #28a745;
-        }
-
-        .btn-delete {
-            background: red;
-        }
-
-        .btn-edit:hover {
-            background: #218838;
-        }
-
-        .btn-delete:hover {
-            background: darkred;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                text-align: center;
-            }
-
-            .content {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    
+{% block content %}
     <div class="container">
         <!-- Left Sidebar (User Info) -->
-        <div class="sidebar">
-            <div class="user-info">
-                <h2>{{ user.username }}</h2>
-                <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Role:</strong> {{ user.role }}</p>
-                <a href="{% url 'logout' %}" class="btn">Logout</a>
-            </div>
-        </div>
-        
-        {% if request.user.role == 'author' %}
+        {% include "users/includes/left_section_of_profile_page.html" %}
+
         <!-- Right Side (Blog List) -->
-        <div class="content">
-            <!-- Top Bar with Create Blog Button -->
-            <div class="top-bar">
-                <h2>Your Blogs</h2>
-                <a href="{% url "home" %}" class="btn">home page</a>
-                <a href="{% url "create_blog" %}" class="btn">Create Blog</a>
-            </div>
-
-            <!-- Blog List (Vertical Layout) -->
-            <div class="blog-list">
-                {% if user_blogs %}
-                    {% for blog in user_blogs %}
-                       
-                        <div class="blog-card">
-                            <div class="blog-image">
-                                <img src="{% static "media/image.png" %}" alt="fdsfsfa">
-                            </div>
-
-                            <div class="blog-contents">
-                                <h4>{{ blog.title }}</h4>
-                            <p>{{ blog.content|truncatewords:20 }}</p>
-                            <div class="card-buttons">
-                                <a href="" class="btn">Read</a>
-                                <a href="{% url 'edit_blog' blog.id %}" class="btn btn-edit">Edit</a>
-                                <a href="{% url "delete_blog" blog.id %}" class="btn btn-delete">Delete</a>
-                            </div>
-                            
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>No blogs created yet.</p>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-       
-        
+        {% include "users/includes/right_section_of_profile_page.html" %}
     </div>
+{% endblock content %}
 
-</body>
-</html>

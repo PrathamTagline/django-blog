@@ -33,6 +33,7 @@ def user_login(request):
             request.session['user_username'] = user.username
             request.session['user_email'] = user.email
             request.session['user_role'] = user.role
+            request.session['user_image'] = user.image.url if user.profile_image else None
 
             return redirect('blogs')
 

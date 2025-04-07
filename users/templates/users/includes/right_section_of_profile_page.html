@@ -1,0 +1,45 @@
+{% load static %}
+{% if request.user.role == 'author' %}
+        <!-- Right Side (Blog List) -->
+        <div class="content">
+            <!-- Top Bar with Create Blog Button -->
+            <div class="top-bar">
+                <h2>Your Blogs</h2>
+                <a href="{% url "home" %}" class="btn">home page</a>
+                <a href="{% url "create_blog" %}" class="btn">Create Blog</a>
+            </div>
+
+            <!-- Blog List (Vertical Layout) -->
+            <div class="blog-list">
+                {% if user_blogs %}
+                    {% for blog in user_blogs %}
+                       
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="card-img-top" style="
+                                width: 100%;
+                                height: 180px;
+                                object-fit: cover;
+                            " />
+                            </div>
+
+                            <div class="blog-contents">
+                                <h4>{{ blog.title }}</h4>
+                                <p>{{ blog.content|truncatewords:20 }}</p>
+                                <p>{{blog.created_at}}</p>
+                                <p>{{blog.tags  }}</p>
+                            <div class="card-buttons">
+                                <a href="" class="btn">Read</a>
+                                <a href="{% url 'edit_blog' blog.id %}" class="btn btn-edit">Edit</a>
+                                <a href="{% url "delete_blog" blog.id %}" class="btn btn-delete">Delete</a>
+                            </div>
+                            
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No blogs created yet.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
