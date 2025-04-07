@@ -5,6 +5,7 @@
         <div class="card-title">{{ blog.title }}</div>
         <div class="card-text">{{ blog.content|truncatechars:30 }}</div>
         <div class="card-text">{{ blog.created_at}}</div>
+        <div class="card-text">{{ blog.tags}}</div>
         <div style="height : 20px"></div>
         <div class="card-text">author : {{blog.author }}</div>
         <a href="{% url "blog_detail" slug=blog.slug %}" class="card-btn">Read More</a>
