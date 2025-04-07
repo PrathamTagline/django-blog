@@ -5,6 +5,7 @@ from .models import Blog, Category,Comment,Like
 from users.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import os
 
 # display all blogs and categories
 def all_blogs(request):
@@ -46,21 +47,25 @@ def add_blog(request):
 # edit blog post (only for author role users can access this page )
 @login_required
 def edit_blog(request, blog_id):
-    blog = get_object_or_404(Blog, id=blog_id) # Get the blog by ID
+    blog = get_object_or_404(Blog, id=blog_id)  # Get the blog by ID
 
     # Check if the logged-in user is the author of the blog
-    if blog.author != request.user: 
+    if blog.author != request.user:
         messages.error(request, "You are not authorized to edit this blog.")
         return redirect('blogs')  # Redirect to the blog list page
 
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES, instance=blog)
         if form.is_valid():
-            form.save()
+            updated_blog = form.save(commit=False)
+            # Update the slug if the title has changed
+            if 'title' in form.changed_data:
+                updated_blog.slug = form.cleaned_data['title'].replace(" ", "-").lower()
+            updated_blog.save()
             messages.success(request, "Blog updated successfully!")
-            return redirect('profile')  # Redirect to the blog detail page
+            return redirect('profile')  # Redirect to the profile page
     else:
-        form = BlogForm(instance=blog) # Create a new form with the blog data
+        form = BlogForm(instance=blog)  # Create a new form with the blog data
 
     return render(request, 'blogs/edit_blog.html', {'form': form, 'blog': blog})
 
@@ -68,11 +73,11 @@ def edit_blog(request, blog_id):
 @login_required
 def delete_blog(request, blog_id):
     blog = get_object_or_404(Blog, id=blog_id) # Get the blog by ID
-
+    os.remove(blog.image.path) # Remove the image file from the server
     # Check if the logged-in user is the author of the blog
     if blog.author != request.user:
         return HttpResponseForbidden()
-
+    blog
     blog.delete() # Delete the blog
     messages.success(request, "Blog deleted successfully!")
     return redirect('profile')
